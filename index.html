@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>Chilli Hub X Venyx V6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #ff202d;
+  --red2: #ff5555;
+  --dark: #080808;
+  --white: #fff;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 16px;
+  overflow-x: hidden;
+  color: white;
+  background:
+    radial-gradient(ellipse at 50% 35%, #351010 0%, #140808 38%, #050505 80%);
+  font-family: 'Rajdhani', sans-serif;
+}
+button {
+  font: inherit;
+}
+/* ===== MOVING BACKGROUND ===== */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(#ff202d0b 1px, transparent 1px),
+    linear-gradient(90deg, #ff202d0b 1px, transparent 1px);
+  background-size: 38px 38px;
+  animation: gridMove 18s linear infinite;
+  mask-image: linear-gradient(to bottom, black, transparent 95%);
+}
+@keyframes gridMove {
+  to { background-position: 38px 38px; }
+}
+.orb {
+  position: fixed;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: #f00;
+  filter: blur(120px);
+  opacity: .16;
+  pointer-events: none;
+  animation: orbFloat 7s ease-in-out infinite alternate;
+}
+.orb.left { top: -100px; left: -100px; }
+.orb.right {
+  right: -100px;
+  bottom: -100px;
+  animation-delay: -3s;
+}
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(.8); }
+  to { transform: translate(70px, 50px) scale(1.35); }
+}
+#particles {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.spark {
+  position: absolute;
+  bottom: -20px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ff5148;
+  box-shadow: 0 0 12px 3px #ff171755;
+  animation: sparkUp linear infinite;
+}
+@keyframes sparkUp {
+  0% { transform: translateY(0) scale(.5); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(-110vh) translateX(40px) scale(1.5); opacity: 0; }
+}
+/* ===== MAIN CARD ===== */
+.page {
+  width: 100%;
+  max-width: 465px;
+  animation: pageEnter 1s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(35px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 32px 26px 24px;
+  border: 1px solid #ff30305c;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #171010f5, #090909f7 70%);
+  box-shadow: 0 25px 90px #000b, 0 0 45px #ff101018;
+  backdrop-filter: blur(20px);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg, #ff7777, transparent 22%,
+    transparent 68%, #ff2020
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.card::after {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -70%;
+  width: 40%;
+  height: 250%;
+  transform: rotate(25deg);
+  background: linear-gradient(90deg, transparent, #ff555509, transparent);
+  animation: cardShine 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes cardShine {
+  0%, 60% { left: -70%; }
+  100% { left: 150%; }
+}
+/* ===== FLAME LOGO ===== */
+.logo {
+  width: 122px;
+  height: 130px;
+  position: relative;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+}
+.fire-glow {
+  position: absolute;
+  width: 85px;
+  height: 90px;
+  background: #ff2100;
+  filter: blur(36px);
+  opacity: .55;
+  animation: fireGlow 1s ease-in-out infinite alternate;
+}
+@keyframes fireGlow {
+  from { transform: scale(.7); opacity: .25; }
+  to { transform: scale(1.3); opacity: .7; }
+}
+.flame {
+  position: relative;
+  width: 92px;
+  height: 112px;
+  z-index: 2;
+  filter: drop-shadow(0 0 9px #ff3500)
+          drop-shadow(0 0 23px #f20b00a0);
+  transform-origin: 50% 100%;
+  animation: flameDance .7s ease-in-out infinite alternate;
+}
+@keyframes flameDance {
+  0% { transform: rotate(-3deg) scale(.97, 1); }
+  50% { transform: rotate(2deg) scale(1.04, .96); }
+  100% { transform: rotate(-1deg) scale(.99, 1.04); }
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ff39394a;
+  border-radius: 50%;
+  animation: ringRotate 10s linear infinite;
+}
+.ring::before,
+.ring::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6565;
+  box-shadow: 0 0 12px #ff2020;
+}
+.ring::before { top: 12px; left: 22px; }
+.ring::after { right: 5px; bottom: 35px; }
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+/* ===== PREMIUM TITLE ===== */
+.eyebrow {
+  color: #ff7777;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(25px, 6.6vw, 34px);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: -1.2px;
+  background: linear-gradient(
+    110deg, #fff 0%, #ffb5b5 20%,
+    #ff2525 45%, #fff 60%, #ff4c4c 80%, #fff 100%
+  );
+  background-size: 250% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 14px #ff20202c);
+  animation: titleFlow 4s linear infinite, titlePulse 3s ease-in-out infinite;
+}
+.title.second {
+  font-size: clamp(23px, 5.8vw, 29px);
+  margin-top: 2px;
+}
+@keyframes titleFlow {
+  to { background-position: 250% center; }
+}
+@keyframes titlePulse {
+  0%, 100% { filter: drop-shadow(0 0 7px #ff202018); }
+  50% { filter: drop-shadow(0 0 19px #ff20205c); }
+}
+.subtitle {
+  margin-top: 12px;
+  color: #bba5a5;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+.line {
+  width: 100%;
+  height: 1px;
+  margin: 23px 0;
+  background: linear-gradient(90deg, transparent, #ff2929, #ff8585, #ff2929, transparent);
+  position: relative;
+  overflow: hidden;
+}
+.line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -35%;
+  width: 30%;
+  height: 2px;
+  background: white;
+  box-shadow: 0 0 12px #fff, 0 0 20px #ff2020;
+  animation: lineTravel 2.5s linear infinite;
+}
+@keyframes lineTravel {
+  to { left: 110%; }
+}
+/* ===== STATUS ===== */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border: 1px solid #ff393943;
+  border-radius: 30px;
+  background: #ff20200d;
+  color: #ff8585;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  margin-bottom: 24px;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: #ff3030;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #ff3030;
+  animation: blink 1s ease-in-out infinite;
+}
+@keyframes blink {
+  50% { opacity: .25; transform: scale(.7); }
+}
+/* ===== BEAUTIFUL KEY BOX ===== */
+.key-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.key-heading strong {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: #eee;
+}
+.key-heading span {
+  color: #ff6565;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.key-shell {
+  position: relative;
+  padding: 1px;
+  border-radius: 15px;
+  background: linear-gradient(115deg, #ff2525, #512020, #ff7777, #351010, #ff2525);
+  background-size: 300% 300%;
+  animation: borderFlow 5s linear infinite;
+  box-shadow: 0 0 23px #ff17171a;
+}
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+.key-inner {
+  position: relative;
+  min-height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 15px;
+  border-radius: 14px;
+  background: radial-gradient(ellipse at top, #281010, #0b0909 80%);
+  overflow: hidden;
+}
+.key-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent 0 7px, #ff333305 8px 9px
+  );
+  pointer-events: none;
+}
+.key-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 40%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, #ff55551a, transparent);
+  animation: keyShine 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes keyShine {
+  0%, 65% { left: -70%; }
+  100% { left: 150%; }
+}
+.key-text {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  color: #ff8b8b;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(13px, 3.4vw, 15px);
+  line-height: 1.8;
+  letter-spacing: .4px;
+  overflow-wrap: anywhere;
+  user-select: all;
+  text-shadow: 0 0 9px #ff20204c;
+}
+.key-tip {
+  margin-top: 9px;
+  text-align: left;
+  color: #8d7a7a;
+  font-size: 12px;
+}
+/* ===== COPY BUTTON ===== */
+.copy-btn {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 57px;
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid #ff6969;
+  border-radius: 13px;
+  background: linear-gradient(105deg, #9b0000, #f52525, #a90000);
+  background-size: 200% 100%;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 7px 25px #ff16162b;
+  animation: buttonFlow 4s linear infinite;
+  transition: transform .25s, box-shadow .25s;
+}
+@keyframes buttonFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.copy-btn::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -70%;
+  width: 40%;
+  height: 300%;
+  transform: rotate(25deg);
+  background: linear-gradient(90deg, transparent, #ffffff50, transparent);
+  transition: left .65s;
+  z-index: -1;
+}
+.copy-btn:hover::before {
+  left: 140%;
+}
+.copy-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px #ff16165c;
+}
+.copy-btn:active {
+  transform: scale(.975);
+}
+.copy-btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+.copy-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.description {
+  margin-top: 17px;
+  color: #9c8b8b;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.description strong {
+  color: #ff6b6b;
+  letter-spacing: .7px;
+}
+.footer {
+  margin-top: 23px;
+  padding-top: 17px;
+  border-top: 1px solid #ffffff0d;
+  color: #625252;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  line-height: 2;
+}
+.footer span {
+  color: #a74a4a;
+}
+/* ===== NOTIFICATION ===== */
+.toast {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  bottom: 25px;
+  width: max-content;
+  max-width: calc(100% - 30px);
+  padding: 13px 20px;
+  border: 1px solid #ff3939;
+  border-radius: 12px;
+  background: #170b0b;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 0 30px #ff202025;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: .3s;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (max-width: 380px) {
+  .card { padding: 27px 17px 21px; }
+  .title { letter-spacing: -1.4px; }
+  .subtitle { letter-spacing: 2.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="orb left"></div>
+<div class="orb right"></div>
+<div id="particles" aria-hidden="true"></div>
+<main class="page">
+  <section class="card">
+    <div class="logo">
+      <div class="fire-glow"></div>
+      <div class="ring"></div>
+      <svg class="flame" viewBox="0 0 100 120"
+           xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="Flaming logo">
+        <defs>
+          <linearGradient id="outer" x1="0" y1="1" x2=".6" y2="0">
+            <stop offset="0%" stop-color="#a00000"/>
+            <stop offset="42%" stop-color="#ff2600"/>
+            <stop offset="76%" stop-color="#ff7517"/>
+            <stop offset="100%" stop-color="#fff0a0"/>
+          </linearGradient>
+          <linearGradient id="inner" x1="0" y1="1" x2=".4" y2="0">
+            <stop offset="0%" stop-color="#ff3500"/>
+            <stop offset="65%" stop-color="#ffb52e"/>
+            <stop offset="100%" stop-color="#fffbd0"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#outer)" d="
+          M51 3 C57 24 82 28 78 55
+          C94 44 91 31 88 26
+          C108 53 100 79 85 99
+          C73 115 54 119 38 112
+          C13 105 2 84 9 62
+          C13 48 23 39 26 24
+          C38 34 39 47 37 55
+          C48 42 49 25 51 3Z"/>
+        <path fill="url(#inner)" d="
+          M53 43 C59 60 73 65 68 81
+          C65 92 55 101 43 96
+          C29 90 29 76 37 64
+          C40 76 47 74 48 63
+          C49 55 51 49 53 43Z"/>
+        <path fill="#fff4d2" d="
+          M48 74 C53 81 56 84 52 92
+          C49 97 43 96 41 91
+          C39 86 43 80 48 74Z"/>
+      </svg>
+    </div>
+    <p class="eyebrow">✦ PREMIUM ACCESS SYSTEM ✦</p>
+    <h1 class="title">CHILLI HUB</h1>
+    <h2 class="title second">X VENYX V6</h2>
+    <p class="subtitle">NEXT GENERATION</p>
+    <div class="line"></div>
+    <div class="status">
+      <span class="status-dot"></span>
+      YOUR KEY PANEL
+    </div>
+    <div class="key-heading">
+      <strong>YOUR ACCESS KEY</strong>
+      <span>● V6 SYSTEM</span>
+    </div>
+    <div class="key-shell">
+      <div class="key-inner">
+        <div class="key-text" id="key">
+          ChilliHubxVenyxV6KwyKakwiwjkeoLapqowjheiwiOqowi
+        </div>
+      </div>
+    </div>
+    <p class="key-tip">↳ Key của bạn được hiển thị ở trên.</p>
+    <button class="copy-btn" id="copyButton" type="button">
+      <span class="copy-icon" id="copyIcon">✦</span>
+      <span id="buttonText">COPY YOUR KEY</span>
+      <span class="copy-icon">➜</span>
+    </button>
+    <p class="description">
+      One Click. <strong>Instant Copy.</strong><br>
+      Chilli Hub X Venyx V6 Edition
+    </p>
+    <footer class="footer">
+      POWERED BY <span>CHILLI HUB</span><br>
+      BLACK & RED · V6 EDITION
+    </footer>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* Floating fire particles */
+const particleBox = document.getElementById("particles");
+for (let i = 0; i < 32; i++) {
+  const p = document.createElement("i");
+  p.className = "spark";
+  p.style.left = Math.random() * 100 + "%";
+  p.style.animationDuration = (6 + Math.random() * 9) + "s";
+  p.style.animationDelay = (-Math.random() * 12) + "s";
+  p.style.opacity = (0.3 + Math.random() * 0.7).toFixed(2);
+  const size = (2 + Math.random() * 3) + "px";
+  p.style.width = size;
+  p.style.height = size;
+  particleBox.appendChild(p);
+}
+const button = document.getElementById("copyButton");
+const buttonText = document.getElementById("buttonText");
+const copyIcon = document.getElementById("copyIcon");
+const toast = document.getElementById("toast");
+let toastTimer;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
+}
+button.addEventListener("click", async () => {
+  const key = document.getElementById("key").textContent.trim();
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(key);
+    } else {
+      const area = document.createElement("textarea");
+      area.value = key;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.left = "-9999px";
+      document.body.appendChild(area);
+      area.select();
+      const ok = document.execCommand("copy");
+      area.remove();
+      if (!ok) throw new Error("Copy failed");
+    }
+    buttonText.textContent = "KEY COPIED SUCCESSFULLY!";
+    copyIcon.textContent = "✓";
+    showToast("✓ Sao chép key thành công!");
+    setTimeout(() => {
+      buttonText.textContent = "COPY YOUR KEY";
+      copyIcon.textContent = "✦";
+    }, 2200);
+  } catch (error) {
+    showToast("Không thể tự copy. Hãy chọn key và sao chép thủ công.");
+  }
+});
+</script>
+</body>
+</html>
